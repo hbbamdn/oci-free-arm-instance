@@ -1,8 +1,9 @@
 name: OCI A1 Batam Capacity Catcher
 
-# Coba setiap 5 menit.
-# 2-57/5 menghindari menit 00 yang sering lebih ramai di GitHub Actions.
+# Coba setiap 10 menit, di luar menit 00.
 on:
+  schedule:
+    - cron: "3-53/10 * * * *"
   # Bisa dites manual dari tab Actions
   workflow_dispatch:
 
@@ -29,11 +30,11 @@ env:
   OCI_CLI_PASSPHRASE: ${{ secrets.OCI_CLI_PASSPHRASE }}
 
   # Instance
-  INSTANCE_NAME: "nyuu"
+  INSTANCE_NAME: "marketplace-a1"
   SHAPE: "VM.Standard.A1.Flex"
-  OCPUS: "1"
-  MEMORY_GB: "4"
-  BOOT_VOLUME_GB: "50"
+  OCPUS: "2"
+  MEMORY_GB: "12"
+  BOOT_VOLUME_GB: "100"
 
   # Discord
   DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

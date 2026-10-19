@@ -1,3 +1,9 @@
+# Konfigurasi Marketplace Batam
+
+Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) untuk fork ini. Workflow yang disiapkan memakai A1.Flex 2 OCPU, 12 GB RAM, boot volume 100 GB, dan jadwal 10 menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
+
+---
+
 # OCI Always Free Arm (A1.Flex) VM Creator
 
 [![Try to Create OCI VM](https://github.com/heykapil/oci-free-arm-instance/actions/workflows/create-vm.yml/badge.svg)](https://github.com/heykapil/oci-free-arm-instance/actions/workflows/create-vm.yml)
