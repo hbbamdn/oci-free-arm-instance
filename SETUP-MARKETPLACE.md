@@ -1,4 +1,4 @@
-﻿# Setup VM marketplace di OCI Batam
+# Setup VM marketplace di OCI Batam
 
 Konfigurasi lokal ada di `.github/workflows/create-vm.yml`: A1.Flex, 2 OCPU, 12 GB RAM, boot volume 100 GB, Ubuntu 24.04 ARM64, region `ap-batam-1`, nama `marketplace-a1`. Workflow mencoba setiap 10 menit dan mencoba menonaktifkan diri setelah VM dibuat atau ditemukan. Kapasitas host tidak dijamin.
 
@@ -24,7 +24,7 @@ Buka Settings > Secrets and variables > Actions > New repository secret. Isi nam
 - `OCI_CLI_KEY_CONTENT`: seluruh isi private API key OCI. Jangan masukkan ke file repo atau chat.
 - `OCI_CLI_PASSPHRASE`: passphrase API key jika key terenkripsi; jika tidak, biarkan kosong.
 - `SSH_PUBLIC_KEY`: public key SSH untuk login ke VM. Simpan private SSH key hanya di perangkat Anda.
-- `DISCORD_WEBHOOK_URL`: webhook Discord bila ingin notifikasi. Jika kosong, langkah notifikasi akan gagal tetapi workflow tetap dapat membuat VM.
+- `DISCORD_WEBHOOK_URL`: webhook Discord bila ingin notifikasi. Jika kosong, langkah notifikasi dilewati dan workflow tetap dapat membuat VM.
 
 Gunakan user API OCI dengan izin seminimal mungkin pada compartment tujuan. Jangan commit credential atau file `.pem`.
 
