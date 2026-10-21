@@ -33,7 +33,7 @@ env:
   INSTANCE_NAME: "marketplace-a1"
   SHAPE: "VM.Standard.A1.Flex"
   OCPUS: "2"
-  MEMORY_GB: "12"
+  MEMORY_GB: "4"
   BOOT_VOLUME_GB: "100"
 
   # Discord
