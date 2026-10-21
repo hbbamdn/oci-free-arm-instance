@@ -1,6 +1,6 @@
 # Konfigurasi Marketplace Batam
 
-Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) untuk fork ini. Workflow yang disiapkan memakai A1.Flex 2 OCPU, 4 GB RAM, boot volume 50 GB, dan mencoba hingga 5 kali per run dengan jeda 60 detik. GitHub menjadwalkan run setiap 5 menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
+Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) dan [panduan cron-job.org](SETUP-CRONJOB.md) untuk fork ini. Workflow memakai A1.Flex 2 OCPU, 4 GB RAM, boot volume 50 GB, dan satu percobaan per pemicu dari cron-job.org setiap menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
 
 ---
 
@@ -14,11 +14,11 @@ This is necessary because the "Always Free" Arm instances are a popular resource
 
 ## Features
 
-* **Fully Automated:** Runs entirely within GitHub Actions. You don't need to run anything on your local machine.
-* **Persistent:** The workflow runs on a 10-minute schedule, continuously retrying until it successfully provisions your VM.
-* **Secure:** All sensitive credentials, keys, and IDs are stored in encrypted GitHub Secrets. The repository itself contains no private information and is safe to be public.
+* **Fully Automated:** cron-job.org triggers GitHub Actions. You don't need to run anything on your local machine.
+* **Persistent:** For this fork, cron-job.org triggers the workflow each minute until it successfully provisions your VM.
+* **Secure:** OCI credentials stay in GitHub Secrets. cron-job.org stores a GitHub token scoped to this repository with Actions write access. The repository itself contains no private information.
 * **Fast:** Uses GitHub's caching to store the `oci-cli` installation, so subsequent runs are much faster.
-* **Informative:** Sends detailed notifications to a Discord channel on every attempt, showing the full success or error log (e.g., "Out of host capacity").
+* **Informative:** Sends Discord notifications when a VM is created or found, or when an unexpected error occurs. Capacity errors appear in GitHub Actions logs.
 
 ---
 
@@ -146,25 +146,25 @@ Go to your forked repository on GitHub.
 You're all set! Now you just need to start the process.
 
 1.  Go to the **"Actions"** tab of your forked repository.
-2.  In the left sidebar, click on **"Try to Create OCI VM"**.
+2.  In the left sidebar, click on **"OCI A1 Batam Capacity Catcher"**.
 3.  You will see a message: "This workflow has a `workflow_dispatch` event." Click the **"Run workflow"** button on the right, and then **"Run workflow"** again.
 
-This will start the first run. From now on, the `schedule` will automatically run it every 10 minutes. You can check the "Actions" tab to see the logs from each run. You will also get a notification in Discord every time it tries.
+This will start the first run. For this fork, follow [the cron-job.org setup](SETUP-CRONJOB.md) to trigger future runs each minute. Check the "Actions" tab for logs; Discord sends notifications when the VM is created, an instance already exists, or an unexpected error occurs.
 
 ---
 
 ## 🚨 CRITICAL: What to Do on Success
 
-One day, you will get a **green "success"** notification in Discord. This means your VM has been created!
+When Discord reports that the VM was created, verify the instance in the OCI Console.
 
-As soon as you see this, you **MUST** disable the workflow.
+The workflow attempts to disable the cron-job.org job and itself automatically. Verify both are disabled:
 
 1.  Go to the **"Actions"** tab in your repository.
-2.  Click on **"Try to Create OCI VM"** in the sidebar.
+2.  Click on **"OCI A1 Batam Capacity Catcher"** in the sidebar.
 3.  Click the **three-dot (...)** menu on the right.
-4.  Click **"Disable workflow"**.
+4.  If still active, click **"Disable workflow"**.
 
-If you do not do this, the action will continue running every 10 minutes and will try to create *another* VM, which will just fill your logs with errors.
+Also check the job in cron-job.org and disable it manually if it is still active. A disabled GitHub workflow does not turn off an external cron job by itself.
 
 Your VM will be provisioning in the OCI console. You can now log in using the SSH key you provided.
 
