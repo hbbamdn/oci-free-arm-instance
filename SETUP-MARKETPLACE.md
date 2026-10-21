@@ -1,6 +1,6 @@
 # Setup VM marketplace di OCI Batam
 
-Konfigurasi lokal ada di `.github/workflows/create-vm.yml`: A1.Flex, 2 OCPU, 4 GB RAM, boot volume 50 GB, Ubuntu 24.04 ARM64, region `ap-batam-1`, nama `marketplace-a1`. Workflow mencoba setiap 10 menit dan mencoba menonaktifkan diri setelah VM dibuat atau ditemukan. Kapasitas host tidak dijamin.
+Konfigurasi lokal ada di `.github/workflows/create-vm.yml`: A1.Flex, 2 OCPU, 4 GB RAM, boot volume 50 GB, Ubuntu 24.04 ARM64, region `ap-batam-1`, nama `marketplace-a1`. GitHub memulai run setiap 5 menit; tiap run mencoba hingga 5 kali dengan jeda 60 detik saat kapasitas penuh. Jadwal GitHub bisa terlambat, sehingga jarak antarpercobaan tidak dijamin tepat 1 menit. Workflow mencoba menonaktifkan diri setelah VM dibuat atau ditemukan. Kapasitas host tidak dijamin.
 
 ## 1. Periksa jatah OCI
 

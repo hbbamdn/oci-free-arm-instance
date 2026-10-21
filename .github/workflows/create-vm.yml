@@ -1,9 +1,9 @@
 name: OCI A1 Batam Capacity Catcher
 
-# Coba setiap 10 menit, di luar menit 00.
+# Mulai run setiap 5 menit; tiap run mencoba hingga 5 kali dengan jeda 60 detik.
 on:
   schedule:
-    - cron: "3-53/10 * * * *"
+    - cron: "3-58/5 * * * *"
   # Bisa dites manual dari tab Actions
   workflow_dispatch:
 
@@ -319,7 +319,35 @@ jobs:
           # ==================================================
 
           echo ""
-          echo "Mencoba launch instance..."
+          for ATTEMPT in 1 2 3 4 5; do
+          if [ "$ATTEMPT" -gt 1 ]; then
+            # Periksa ulang jika instance dibuat dari OCI Console saat run berjalan.
+            EXISTING_JSON=$(oci compute instance list \
+              --compartment-id "$COMPARTMENT_ID" \
+              --region "$OCI_CLI_REGION" \
+              --display-name "$INSTANCE_NAME" \
+              --all \
+              --output json)
+
+            EXISTING_ID=$(echo "$EXISTING_JSON" | jq -r '
+              [.data[] | select(."lifecycle-state" != "TERMINATED") | .id]
+              | first // empty
+            ')
+
+            if [ -n "$EXISTING_ID" ]; then
+              EXISTING_STATE=$(echo "$EXISTING_JSON" | jq -r --arg id "$EXISTING_ID" '
+                [.data[] | select(.id == $id)] | first | ."lifecycle-state" // empty
+              ')
+              echo "Instance sudah ada: $EXISTING_ID ($EXISTING_STATE)"
+              echo "result=exists" >> "$GITHUB_OUTPUT"
+              echo "stop_workflow=true" >> "$GITHUB_OUTPUT"
+              echo "instance_id=$EXISTING_ID" >> "$GITHUB_OUTPUT"
+              echo "instance_state=$EXISTING_STATE" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          echo "Percobaan $ATTEMPT/5: mencoba launch instance..."
 
 
           set +e
@@ -388,6 +416,12 @@ jobs:
 
             echo ""
             echo "Batam masih OUT OF CAPACITY."
+            if [ "$ATTEMPT" -lt 5 ]; then
+              echo "Mencoba lagi dalam 60 detik."
+              sleep 60
+              continue
+            fi
+
             echo "GitHub Actions akan mencoba lagi pada schedule berikutnya."
 
             echo "result=capacity" >> "$GITHUB_OUTPUT"
@@ -395,6 +429,10 @@ jobs:
 
             exit 0
           fi
+
+          # Rate limit dan error lain ditangani di bawah; jangan ulangi di run ini.
+          break
+          done
 
 
           # ==================================================
