@@ -34,7 +34,7 @@ env:
   SHAPE: "VM.Standard.A1.Flex"
   OCPUS: "2"
   MEMORY_GB: "4"
-  BOOT_VOLUME_GB: "100"
+  BOOT_VOLUME_GB: "50"
 
   # Discord
   DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

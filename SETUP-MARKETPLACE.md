@@ -1,16 +1,16 @@
 # Setup VM marketplace di OCI Batam
 
-Konfigurasi lokal ada di `.github/workflows/create-vm.yml`: A1.Flex, 2 OCPU, 4 GB RAM, boot volume 100 GB, Ubuntu 24.04 ARM64, region `ap-batam-1`, nama `marketplace-a1`. Workflow mencoba setiap 10 menit dan mencoba menonaktifkan diri setelah VM dibuat atau ditemukan. Kapasitas host tidak dijamin.
+Konfigurasi lokal ada di `.github/workflows/create-vm.yml`: A1.Flex, 2 OCPU, 4 GB RAM, boot volume 50 GB, Ubuntu 24.04 ARM64, region `ap-batam-1`, nama `marketplace-a1`. Workflow mencoba setiap 10 menit dan mencoba menonaktifkan diri setelah VM dibuat atau ditemukan. Kapasitas host tidak dijamin.
 
 ## 1. Periksa jatah OCI
 
-Di OCI Console, periksa semua instance A1, boot volume, block volume, dan backup di home region Batam. Jatah Always Free A1 saat ini setara 2 OCPU/12 GB; penyimpanan gabungan 200 GB. Konfigurasi ini memakai seluruh jatah OCPU A1, 4 GB dari jatah RAM A1, dan 100 GB penyimpanan. Jangan mulai jika jatah sudah terpakai atau ukuran ini akan menimbulkan biaya pada akun Anda.
+Di OCI Console, periksa semua instance A1, boot volume, block volume, dan backup di home region Batam. Jatah Always Free A1 saat ini setara 2 OCPU/12 GB; penyimpanan gabungan 200 GB. Konfigurasi ini memakai seluruh jatah OCPU A1, 4 GB dari jatah RAM A1, dan 50 GB penyimpanan. Jangan mulai jika jatah sudah terpakai atau ukuran ini akan menimbulkan biaya pada akun Anda.
 
 ## 2. Fork dan salin workflow
 
 1. Fork `https://github.com/NarahaYuu/oci-free-arm-instance` ke akun GitHub Anda.
 2. Pada fork, buka `.github/workflows/create-vm.yml`, klik Edit, lalu ganti isinya dengan file lokal ini dan commit ke branch default fork. Jangan push ke repo sumber.
-3. Pastikan bagian atas file memuat `schedule` dan `workflow_dispatch`, serta nilai `INSTANCE_NAME=marketplace-a1`, `OCPUS=2`, `MEMORY_GB=4`, `BOOT_VOLUME_GB=100`.
+3. Pastikan bagian atas file memuat `schedule` dan `workflow_dispatch`, serta nilai `INSTANCE_NAME=marketplace-a1`, `OCPUS=2`, `MEMORY_GB=4`, `BOOT_VOLUME_GB=50`.
 
 ## 3. Isi GitHub Actions Secrets di fork
 

@@ -1,6 +1,6 @@
 # Konfigurasi Marketplace Batam
 
-Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) untuk fork ini. Workflow yang disiapkan memakai A1.Flex 2 OCPU, 4 GB RAM, boot volume 100 GB, dan jadwal 10 menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
+Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) untuk fork ini. Workflow yang disiapkan memakai A1.Flex 2 OCPU, 4 GB RAM, boot volume 50 GB, dan jadwal 10 menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
 
 ---
 
