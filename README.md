@@ -1,6 +1,6 @@
 # Konfigurasi Marketplace Batam
 
-Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) dan [panduan cron-job.org](SETUP-CRONJOB.md) untuk fork ini. Workflow memakai A1.Flex 2 OCPU, 4 GB RAM, boot volume 50 GB, dan satu percobaan per pemicu dari cron-job.org setiap menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
+Gunakan [panduan setup marketplace](SETUP-MARKETPLACE.md) dan [panduan cron-job.org](SETUP-CRONJOB.md) untuk fork ini. Workflow memakai A1.Flex 1 OCPU, 4 GB RAM, boot volume 50 GB, dan satu percobaan per pemicu dari cron-job.org setiap menit. Instruksi umum dari repo asal di bawah dapat berbeda dari konfigurasi ini.
 
 ---
 
@@ -84,12 +84,11 @@ This is the most detailed step. You need to gather **11 pieces of information** 
     * If you still can not find the image, check this website and choose your image and copy ocid mentioned according to region. <https://docs.oracle.com/en-us/iaas/images/>
     * set this `IMAGE_ID` in your action env.
 4.  **OCPUs and RAM**
-    * The settings in this fork provision an instance with 2 OCPUs and 4 GB memory.
-    * you can change this in action line 59 `--shape-config '{"ocpus":2,"memoryInGBs":12}' \`
+    * The settings in this fork provision an instance with 1 OCPU and 4 GB memory.
+    * Change `OCPUS` and `MEMORY_GB` in `.github/workflows/create-vm.yml` to adjust this.
 6. **Boot Volume and Name**
-    * The default settings in this action is to provision instance with `100`GB boot volume with name `coolify-vm`.
-    * you can change bootvolume in action line 65 `--boot-volume-size-in-gbs 100' \`
-    * you can change instance name in same command (action line 64) `--display-name "coolify-vm"`
+    * This fork provisions a 50 GB boot volume named `marketplace-a1`.
+    * Change `BOOT_VOLUME_GB` and `INSTANCE_NAME` in `.github/workflows/create-vm.yml` to adjust these values.
    
 ### D. Your SSH Public Key
 
