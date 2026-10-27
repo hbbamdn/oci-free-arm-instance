@@ -65,7 +65,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.local
-          key: ${{ runner.os }}-python313-oci-cli-v1
+          key: ${{ runner.os }}-python313-oci-cli-v2
 
 
       - name: Add OCI CLI to PATH
@@ -83,12 +83,11 @@ jobs:
 
           export PATH="$HOME/.local/bin:$PATH"
 
-          if command -v oci >/dev/null 2>&1; then
+          if command -v oci >/dev/null 2>&1 && oci --version; then
             echo "OCI CLI ditemukan dari cache."
-            oci --version
           else
-            echo "OCI CLI belum ada. Installing..."
-            python -m pip install --user oci-cli
+            echo "OCI CLI belum ada atau cache tidak valid. Installing..."
+            python -m pip install --user --force-reinstall oci-cli
             oci --version
           fi
 
